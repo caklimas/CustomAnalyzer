@@ -9,74 +9,44 @@ using CustomAnalyzer;
 namespace CustomAnalyzer.Test
 {
     [TestClass]
-    public class UnitTest : CodeFixVerifier
+    public class CustomAnalyzerTests : CodeFixVerifier
     {
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void TestMethod1()
+        public void ReturnsWarning_WhenUsingStatementOutOfOrder()
         {
-            var test = @"";
+            var test = $@"using System.Linq;
+using System;
 
-            VerifyCSharpDiagnostic(test);
-        }
-
-        //Diagnostic and CodeFix both triggered and checked for
-        [TestMethod]
-        public void TestMethod2()
-        {
-            var test = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TypeName
-        {   
-        }
-    }";
+namespace ConsoleApplication1
+{{
+    class TypeName
+    {{   
+    }}
+}}";
             var expected = new DiagnosticResult
             {
-                Id = "CustomAnalyzer",
-                Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
+                Id = UsingDirectiveAnalyzer.DiagnosticId,
+                Message = UsingDirectiveAnalyzer.MessageFormat.ToString(),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 11, 15)
+                            new DiagnosticResultLocation("Test0.cs", line: 2, column: 1)
                         }
             };
 
             VerifyCSharpDiagnostic(test, expected);
-
-            var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TYPENAME
-        {   
-        }
-    }";
-            VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new CustomAnalyzerCodeFixProvider();
+            return new UsingDirectiveAnalyzerCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new CustomAnalyzerAnalyzer();
+            return new UsingDirectiveAnalyzer();
         }
     }
 }
