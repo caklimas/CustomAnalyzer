@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CustomAnalyzer.325d9b6c-67e9-4ab4-9cf5-0d831ec8594b" Version="1.0" Language="en-US" Publisher="caklimas"/>
+        <Identity Id="CustomAnalyzer.325d9b6c-67e9-4ab4-9cf5-0d831ec8594b" Version="1.2" Language="en-US" Publisher="caklimas"/>
         <DisplayName>CustomAnalyzer</DisplayName>
         <Description xml:space="preserve">Analyzer to alphabetize using directives.</Description>
     </Metadata>

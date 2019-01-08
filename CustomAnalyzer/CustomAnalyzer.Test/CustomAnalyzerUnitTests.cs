@@ -14,17 +14,17 @@ namespace CustomAnalyzer.Test
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void ReturnsWarning_WhenUsingStatementOutOfOrder()
+        public void ReturnsWarning_WhenDirectivesOutOfOrder()
         {
-            var test = $@"using System.Linq;
+            var test = @"using System.Linq;
 using System;
 
 namespace ConsoleApplication1
-{{
+{
     class TypeName
-    {{   
-    }}
-}}";
+    {
+    }
+}";
             var expected = new DiagnosticResult
             {
                 Id = UsingDirectiveAnalyzer.DiagnosticId,
@@ -37,6 +37,31 @@ namespace ConsoleApplication1
             };
 
             VerifyCSharpDiagnostic(test, expected);
+        }
+
+        [TestMethod]
+        public void ShouldAlphabetizeUsingDirectives_WhenDirectivesOutOfOrder()
+        {
+            var test = @"using System.Linq;
+using System;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+    }
+}";
+
+            var fixtest = @"using System;
+using System.Linq;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+    }
+}";
+            VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
