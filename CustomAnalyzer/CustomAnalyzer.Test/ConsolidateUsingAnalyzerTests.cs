@@ -9,14 +9,15 @@ using CustomAnalyzer;
 namespace CustomAnalyzer.Test
 {
     [TestClass]
-    public class CustomAnalyzerTests : CodeFixVerifier
+    public class ConsolidateUsingAnalyzerTests : CodeFixVerifier
     {
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void ReturnsWarning_WhenDirectivesOutOfOrder()
+        public void ReturnsWarning_WhenDirectiveHasExtraTrivia()
         {
             var test = @"using System.Linq;
+
 using System;
 
 namespace ConsoleApplication1
@@ -27,12 +28,12 @@ namespace ConsoleApplication1
 }";
             var expected = new DiagnosticResult
             {
-                Id = UsingDirectiveAnalyzer.DiagnosticId,
-                Message = UsingDirectiveAnalyzer.MessageFormat.ToString(),
+                Id = ConsolidateUsingAnalyzer.DiagnosticId,
+                Message = ConsolidateUsingAnalyzer.MessageFormat.ToString(),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", line: 2, column: 1)
+                            new DiagnosticResultLocation("Test0.cs", line: 3, column: 1)
                         }
             };
 
@@ -40,38 +41,38 @@ namespace ConsoleApplication1
         }
 
         [TestMethod]
-        public void ShouldAlphabetizeUsingDirectives_WhenDirectivesOutOfOrder()
+        public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
         {
-            var test = @"using System.Linq;
-using System;
+//            var test = @"using System.Linq;
+//using System;
 
-namespace ConsoleApplication1
-{
-    class TypeName
-    {
-    }
-}";
+//namespace ConsoleApplication1
+//{
+//    class TypeName
+//    {
+//    }
+//}";
 
-            var fixtest = @"using System;
-using System.Linq;
+//            var fixtest = @"using System;
+//using System.Linq;
 
-namespace ConsoleApplication1
-{
-    class TypeName
-    {
-    }
-}";
-            VerifyCSharpFix(test, fixtest);
+//namespace ConsoleApplication1
+//{
+//    class TypeName
+//    {
+//    }
+//}";
+//            VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new UsingDirectiveAnalyzerCodeFixProvider();
+            return new ConsolidateUsingAnalyzerCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new UsingDirectiveAnalyzer();
+            return new ConsolidateUsingAnalyzer();
         }
     }
 }

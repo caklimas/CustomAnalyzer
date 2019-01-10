@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="ConsolidateUsingAnalyzer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ConsolidateUsingAnalyzerCodeFixProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
     <EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
   </ItemGroup>

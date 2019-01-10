@@ -64,27 +64,54 @@ namespace CustomAnalyzer {
         /// <summary>
         ///   Looks up a localized string similar to Using directives should be alphabetized..
         /// </summary>
-        internal static string AnalyzerDescription {
+        internal static string AlphabetizeAnalyzerDescription {
             get {
-                return ResourceManager.GetString("AnalyzerDescription", resourceCulture);
+                return ResourceManager.GetString("AlphabetizeAnalyzerDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Using directive is not in the correct order.
         /// </summary>
-        internal static string AnalyzerMessageFormat {
+        internal static string AlphabetizeAnalyzerMessageFormat {
             get {
-                return ResourceManager.GetString("AnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("AlphabetizeAnalyzerMessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Using directive not alphabetized.
         /// </summary>
-        internal static string AnalyzerTitle {
+        internal static string AlphabetizeAnalyzerTitle {
             get {
-                return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
+                return ResourceManager.GetString("AlphabetizeAnalyzerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using directives can be consolidated..
+        /// </summary>
+        internal static string ConsolidateAnalyzerDescription {
+            get {
+                return ResourceManager.GetString("ConsolidateAnalyzerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using directives are not consolidates.
+        /// </summary>
+        internal static string ConsolidateAnalyzerMessageFormat {
+            get {
+                return ResourceManager.GetString("ConsolidateAnalyzerMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using directives not consolidated.
+        /// </summary>
+        internal static string ConsolidateAnalyzerTitle {
+            get {
+                return ResourceManager.GetString("ConsolidateAnalyzerTitle", resourceCulture);
             }
         }
     }

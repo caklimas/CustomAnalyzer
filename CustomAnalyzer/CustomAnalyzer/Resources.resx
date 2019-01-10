@@ -117,16 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnalyzerDescription" xml:space="preserve">
+  <data name="AlphabetizeAnalyzerDescription" xml:space="preserve">
     <value>Using directives should be alphabetized.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="AnalyzerMessageFormat" xml:space="preserve">
+  <data name="AlphabetizeAnalyzerMessageFormat" xml:space="preserve">
     <value>Using directive is not in the correct order</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="AnalyzerTitle" xml:space="preserve">
+  <data name="AlphabetizeAnalyzerTitle" xml:space="preserve">
     <value>Using directive not alphabetized</value>
+    <comment>The title of the diagnostic.</comment>
+  </data>
+  <data name="ConsolidateAnalyzerDescription" xml:space="preserve">
+    <value>Using directives can be consolidated.</value>
+    <comment>An optional longer localizable description of the diagnostic.</comment>
+  </data>
+  <data name="ConsolidateAnalyzerMessageFormat" xml:space="preserve">
+    <value>Using directives are not consolidates</value>
+    <comment>The format-able message the diagnostic displays.</comment>
+  </data>
+  <data name="ConsolidateAnalyzerTitle" xml:space="preserve">
+    <value>Using directives not consolidated</value>
     <comment>The title of the diagnostic.</comment>
   </data>
 </root>
