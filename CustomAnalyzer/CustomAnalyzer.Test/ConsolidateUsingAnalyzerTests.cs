@@ -43,26 +43,27 @@ namespace ConsoleApplication1
         [TestMethod]
         public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
         {
-//            var test = @"using System.Linq;
-//using System;
+            var test = @"using System;
 
-//namespace ConsoleApplication1
-//{
-//    class TypeName
-//    {
-//    }
-//}";
+using System.Linq;
 
-//            var fixtest = @"using System;
-//using System.Linq;
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+    }
+}";
 
-//namespace ConsoleApplication1
-//{
-//    class TypeName
-//    {
-//    }
-//}";
-//            VerifyCSharpFix(test, fixtest);
+            var fixtest = @"using System;
+using System.Linq;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+    }
+}";
+            VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()

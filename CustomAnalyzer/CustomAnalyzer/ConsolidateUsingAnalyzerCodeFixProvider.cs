@@ -32,24 +32,38 @@ namespace CustomAnalyzer
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
+            var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
+
             var diagnostic = context.Diagnostics.First();
-            
+            var diagnosticSpan = diagnostic.Location.SourceSpan;
+
+            // Find the type declaration identified by the diagnostic.
+            var declaration = root.FindToken(diagnosticSpan.Start)
+                .Parent
+                .AncestorsAndSelf()
+                .OfType<UsingDirectiveSyntax>()
+                .First();
+
             // Register a code action that will invoke the fix.
-            //context.RegisterCodeFix(
-            //    CodeAction.Create(
-            //        title: title,
-            //        createChangedDocument: c => ConsolidateUsingDirectivesAsync(context.Document, c),
-            //        equivalenceKey: title),
-            //    diagnostic);
+            context.RegisterCodeFix(
+                CodeAction.Create(
+                    title: title,
+                    createChangedDocument: c => ConsolidateUsingDirectivesAsync(context.Document, declaration, c),
+                    equivalenceKey: title),
+                diagnostic);
 
             await Task.CompletedTask;
         }
 
-        private async Task<Document> ConsolidateUsingDirectivesAsync(Document document, CancellationToken token)
+        private async Task<Document> ConsolidateUsingDirectivesAsync(Document document, UsingDirectiveSyntax usingDirective, CancellationToken token)
         {
+            var leadingTrivia = usingDirective.GetLeadingTrivia()
+                .Where(trivia => !trivia.IsKind(SyntaxKind.EndOfLineTrivia))
+                .ToList();
+
+            var newNode = usingDirective.WithLeadingTrivia(new SyntaxTriviaList(leadingTrivia));
             var oldRoot = await document.GetSyntaxRootAsync() as CompilationUnitSyntax;
-            var sortedUsingDirectives = new SyntaxList<UsingDirectiveSyntax>(oldRoot.Usings.OrderBy(u => u.Name.ToString()).ToList());
-            var newRoot = oldRoot.WithUsings(sortedUsingDirectives);
+            var newRoot = oldRoot.ReplaceNode(usingDirective, newNode);
             return document.WithSyntaxRoot(newRoot);
         }
     }
