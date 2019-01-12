@@ -26,17 +26,20 @@ namespace CustomAnalyzer
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(AnalyzeUsingDirective, SyntaxKind.UsingDirective);
+            context.RegisterSyntaxTreeAction(AnalyzeUsingDirectives);
         }
-
-        private void AnalyzeUsingDirective(SyntaxNodeAnalysisContext context)
+        
+        private void AnalyzeUsingDirectives(SyntaxTreeAnalysisContext context)
         {
-            var usingDirective = context.Node as UsingDirectiveSyntax;
-            if (!usingDirective.GetLeadingTrivia().Any())
-                return;
-
-            var diagnostic = Diagnostic.Create(Rule, usingDirective.GetLocation());
-            context.ReportDiagnostic(diagnostic);
+            var root = context.Tree.GetRoot() as CompilationUnitSyntax;
+            foreach (var usingDirective in root.Usings)
+            {
+                if (usingDirective.GetLeadingTrivia().Any())
+                {
+                    var diagnostic = Diagnostic.Create(Rule, usingDirective.GetLocation());
+                    context.ReportDiagnostic(diagnostic);
+                }
+            }
         }
     }
 }
