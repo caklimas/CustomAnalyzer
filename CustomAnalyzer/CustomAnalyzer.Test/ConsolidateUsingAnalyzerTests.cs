@@ -41,7 +41,7 @@ namespace ConsoleApplication1
         }
 
         [TestMethod]
-        public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
+        public void ShouldConsolidateUsingDirectives_WhenDirectiveHasExtraTrivia()
         {
             var test = @"using System;
 
@@ -56,6 +56,35 @@ namespace ConsoleApplication1
 
             var fixtest = @"using System;
 using System.Linq;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+    }
+}";
+            VerifyCSharpFix(test, fixtest);
+        }
+
+        [TestMethod]
+        public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
+        {
+            var test = @"using System;
+
+using System.Linq;
+
+using System.Text;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+    }
+}";
+
+            var fixtest = @"using System;
+using System.Linq;
+using System.Text;
 
 namespace ConsoleApplication1
 {

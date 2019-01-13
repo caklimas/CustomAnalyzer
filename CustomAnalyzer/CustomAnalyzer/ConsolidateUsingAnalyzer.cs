@@ -34,7 +34,7 @@ namespace CustomAnalyzer
             var root = context.Tree.GetRoot() as CompilationUnitSyntax;
             foreach (var usingDirective in root.Usings)
             {
-                if (usingDirective.GetLeadingTrivia().Any())
+                if (usingDirective.GetLeadingTrivia().Any(trivia => trivia.IsKind(SyntaxKind.EndOfLineTrivia)))
                 {
                     var diagnostic = Diagnostic.Create(Rule, usingDirective.GetLocation());
                     context.ReportDiagnostic(diagnostic);

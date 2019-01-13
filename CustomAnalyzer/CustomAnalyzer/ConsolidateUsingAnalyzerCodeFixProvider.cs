@@ -32,38 +32,24 @@ namespace CustomAnalyzer
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
-            var diagnostics = context.Diagnostics;
+            var diagnostic = context.Diagnostics.First();
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: title,
-                    createChangedDocument: c => ConsolidateUsingDirectivesAsync(context.Document, diagnostics, c),
+                    createChangedDocument: c => ConsolidateUsingDirectivesAsync(context.Document, c),
                     equivalenceKey: title),
-                diagnostics);
+                diagnostic);
 
             await Task.CompletedTask;
         }
 
-        private async Task<Document> ConsolidateUsingDirectivesAsync(
-            Document document, 
-            IEnumerable<Diagnostic> diagnostics, 
-            CancellationToken token)
+        private async Task<Document> ConsolidateUsingDirectivesAsync(Document document, CancellationToken token)
         {
-            var root = await document.GetSyntaxRootAsync();
-            var usingDirectives = diagnostics
-                .Select(d => d.Location.SourceSpan)
-                .Select(s => root.FindToken(s.Start)
-                    .Parent.AncestorsAndSelf()
-                    .OfType<UsingDirectiveSyntax>()
-                    .First())
-                .ToList();
-
-            var newRoot = root;
-            foreach(var usingDirective in usingDirectives)
-                newRoot = root.ReplaceNode(usingDirective, ConsolidateUsingDirective(usingDirective));
-
+            var root = await document.GetSyntaxRootAsync() as CompilationUnitSyntax;
+            var consolidatedUsingDirectives = root.Usings.Select(u => ConsolidateUsingDirective(u));
+            var newRoot = root.WithUsings(new SyntaxList<UsingDirectiveSyntax>(consolidatedUsingDirectives));
             return document.WithSyntaxRoot(newRoot);
         }
 
