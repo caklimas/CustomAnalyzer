@@ -59,8 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CustomAnalyzer\CustomAnalyzer.csproj">
-      <Project>{DCC655A7-DE83-42CA-A5D5-35E649CCC0F6}</Project>
+      <Project>{232BA922-BADA-412D-A476-37EF1C8A91DD}</Project>
       <Name>CustomAnalyzer</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

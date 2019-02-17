@@ -17,7 +17,7 @@ namespace CustomAnalyzer.Analyzers.UsingDirective
         public const string NamespaceDiagnosticId = "Namespace" + nameof(UsingDirectiveAnalyzer);
 
         public static readonly string Title = "Using directives not organized";
-        public static readonly string MessageFormat = "USing directives are not organized";
+        public static readonly string MessageFormat = "Using directives are not organized";
         public static readonly string Description = "Using directives should be consolidated and alphabetized";
         public const string Category = "Using Directives";
 

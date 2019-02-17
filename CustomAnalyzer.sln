@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAnalyzer", "CustomAnalyzer\CustomAnalyzer\CustomAnalyzer.csproj", "{DCC655A7-DE83-42CA-A5D5-35E649CCC0F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomAnalyzer", "CustomAnalyzer\CustomAnalyzer.csproj", "{232BA922-BADA-412D-A476-37EF1C8A91DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAnalyzer.Test", "CustomAnalyzer\CustomAnalyzer.Test\CustomAnalyzer.Test.csproj", "{A952C252-3D44-4BF5-8A86-B1D7D4FF2869}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomAnalyzer.Test", "CustomAnalyzer.Test\CustomAnalyzer.Test.csproj", "{BE1C17AD-A05E-47E0-AEC0-D3116AAA9864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAnalyzer.Vsix", "CustomAnalyzer\CustomAnalyzer.Vsix\CustomAnalyzer.Vsix.csproj", "{898459DB-A1AB-4AE0-A71F-C8C5D505B20D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAnalyzer.Vsix", "CustomAnalyzer.Vsix\CustomAnalyzer.Vsix.csproj", "{898459DB-A1AB-4AE0-A71F-C8C5D505B20D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +15,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DCC655A7-DE83-42CA-A5D5-35E649CCC0F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCC655A7-DE83-42CA-A5D5-35E649CCC0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCC655A7-DE83-42CA-A5D5-35E649CCC0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCC655A7-DE83-42CA-A5D5-35E649CCC0F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A952C252-3D44-4BF5-8A86-B1D7D4FF2869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A952C252-3D44-4BF5-8A86-B1D7D4FF2869}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A952C252-3D44-4BF5-8A86-B1D7D4FF2869}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A952C252-3D44-4BF5-8A86-B1D7D4FF2869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232BA922-BADA-412D-A476-37EF1C8A91DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232BA922-BADA-412D-A476-37EF1C8A91DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232BA922-BADA-412D-A476-37EF1C8A91DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232BA922-BADA-412D-A476-37EF1C8A91DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE1C17AD-A05E-47E0-AEC0-D3116AAA9864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE1C17AD-A05E-47E0-AEC0-D3116AAA9864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE1C17AD-A05E-47E0-AEC0-D3116AAA9864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE1C17AD-A05E-47E0-AEC0-D3116AAA9864}.Release|Any CPU.Build.0 = Release|Any CPU
 		{898459DB-A1AB-4AE0-A71F-C8C5D505B20D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{898459DB-A1AB-4AE0-A71F-C8C5D505B20D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{898459DB-A1AB-4AE0-A71F-C8C5D505B20D}.Release|Any CPU.ActiveCfg = Release|Any CPU
