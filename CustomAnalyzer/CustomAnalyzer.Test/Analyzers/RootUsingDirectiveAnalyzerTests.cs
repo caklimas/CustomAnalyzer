@@ -1,17 +1,19 @@
+﻿using CustomAnalyzer.Analyzers;
+using CustomAnalyzer.Analyzers.UsingDirective;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using TestHelper;
-using CustomAnalyzer.CompilationUnit;
 
-namespace CustomAnalyzer.Test.CompilationUnit
+namespace CustomAnalyzer.Test.Analyzers
 {
     [TestClass]
-    public class AlphabetizeUsingAnalyzerTests : CodeFixVerifier
+    public class RootUsingDirectiveAnalyzerTests : CodeFixVerifier
     {
-
-        //No diagnostics expected to show up
         [TestMethod]
         public void ReturnsWarning_WhenDirectivesOutOfOrder()
         {
@@ -26,8 +28,8 @@ namespace ConsoleApplication1
 }";
             var expected = new DiagnosticResult
             {
-                Id = AlphabetizeUsingAnalyzer.DiagnosticId,
-                Message = AlphabetizeUsingAnalyzer.MessageFormat.ToString(),
+                Id = UsingDirectiveAnalyzer.CompilationUnitDiagnosticId,
+                Message = UsingDirectiveAnalyzer.MessageFormat.ToString(),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
@@ -42,6 +44,7 @@ namespace ConsoleApplication1
         public void ShouldAlphabetizeUsingDirectives_WhenDirectivesOutOfOrder()
         {
             var test = @"using System.Linq;
+
 using System;
 
 namespace ConsoleApplication1
@@ -65,12 +68,12 @@ namespace ConsoleApplication1
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new AlphabetizeUsingAnalyzerCodeFixProvider();
+            return new RootUsingDirectiveCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new AlphabetizeUsingAnalyzer();
+            return new UsingDirectiveAnalyzer();
         }
     }
 }

@@ -1,38 +1,38 @@
+﻿using CustomAnalyzer.Analyzers;
+using CustomAnalyzer.Analyzers.UsingDirective;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using TestHelper;
-using CustomAnalyzer.NamespaceDeclaration;
 
-namespace CustomAnalyzer.Test.NamespaceDeclaration
+namespace CustomAnalyzer.Test.Analyzers
 {
     [TestClass]
-    public class ConsolidateUsingAnalyzerTests : CodeFixVerifier
+    public class RootUsingDiNamespaceUsingDirectiveAnalyzerTestsrectiveAnalyzerTests : CodeFixVerifier
     {
-
-        //No diagnostics expected to show up
         [TestMethod]
-        public void ReturnsWarning_WhenDirectiveHasExtraTrivia()
+        public void ReturnsWarning_WhenDirectivesUnorganized()
         {
             var test = @"namespace ConsoleApplication1
 {
     using System.Linq;
-
     using System;
-
     class TypeName
     {
     }
 }";
             var expected = new DiagnosticResult
             {
-                Id = ConsolidateUsingAnalyzer.DiagnosticId,
-                Message = ConsolidateUsingAnalyzer.MessageFormat.ToString(),
+                Id = UsingDirectiveAnalyzer.NamespaceDiagnosticId,
+                Message = UsingDirectiveAnalyzer.MessageFormat.ToString(),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", line: 5, column: 5)
+                            new DiagnosticResultLocation("Test0.cs", line: 4, column: 5)
                         }
             };
 
@@ -40,14 +40,13 @@ namespace CustomAnalyzer.Test.NamespaceDeclaration
         }
 
         [TestMethod]
-        public void ShouldConsolidateUsingDirectives_WhenDirectiveHasExtraTrivia()
+        public void ShouldAlphabetizeUsingDirectives_WhenDirectivesUnorganized()
         {
             var test = @"namespace ConsoleApplication1
 {
     using System.Linq;
 
     using System;
-
     class TypeName
     {
     }
@@ -57,36 +56,6 @@ namespace CustomAnalyzer.Test.NamespaceDeclaration
 {
     using System;
     using System.Linq;
-
-    class TypeName
-    {
-    }
-}";
-            VerifyCSharpFix(test, fixtest);
-        }
-
-        [TestMethod]
-        public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
-        {
-            var test = @"namespace ConsoleApplication1
-{
-    using System;
-
-    using System.Linq;
-
-    using System.Text;
-
-    class TypeName
-    {
-    }
-}";
-
-            var fixtest = @"namespace ConsoleApplication1
-{
-    using System;
-    using System.Linq;
-    using System.Text;
-
     class TypeName
     {
     }
@@ -96,12 +65,12 @@ namespace CustomAnalyzer.Test.NamespaceDeclaration
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new ConsolidateUsingAnalyzerCodeFixProvider();
+            return new NamespaceUsingDirectiveCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new ConsolidateUsingAnalyzer();
+            return new UsingDirectiveAnalyzer();
         }
     }
 }

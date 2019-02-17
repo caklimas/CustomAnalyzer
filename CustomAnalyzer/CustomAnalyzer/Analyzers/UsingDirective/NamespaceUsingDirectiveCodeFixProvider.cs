@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using System.Composition;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -7,23 +7,21 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
 using CustomAnalyzer.Helpers;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Threading;
+using System.Collections.Generic;
+using Microsoft.CodeAnalysis.CSharp;
 
-namespace CustomAnalyzer.NamespaceDeclaration
+namespace CustomAnalyzer.Analyzers.UsingDirective
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(AlphabetizeUsingAnalyzerCodeFixProvider)), Shared]
-    public class AlphabetizeUsingAnalyzerCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(NamespaceUsingDirectiveCodeFixProvider)), Shared]
+    public class NamespaceUsingDirectiveCodeFixProvider : CodeFixProvider
     {
-        private const string title = "Alphabetize using statements";
+        private const string title = "Organize using statements";
 
-        public sealed override ImmutableArray<string> FixableDiagnosticIds
-        {
-            get { return ImmutableArray.Create(AlphabetizeUsingAnalyzer.DiagnosticId); }
-        }
+        public sealed override ImmutableArray<string> FixableDiagnosticIds =>
+            ImmutableArray.Create(UsingDirectiveAnalyzer.NamespaceDiagnosticId);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
-            // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/FixAllProvider.md for more information on Fix All Providers
             return WellKnownFixAllProviders.BatchFixer;
         }
 
@@ -46,12 +44,23 @@ namespace CustomAnalyzer.NamespaceDeclaration
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: title,
-                    createChangedDocument: c =>
-                        NamespaceDeclarationHelpers.CleanupUsingDirectives(context.Document, declaration),
+                    createChangedDocument: c => CleanupUsingDirectives(context.Document, declaration),
                     equivalenceKey: title),
                 diagnostic);
 
             await Task.CompletedTask;
+        }
+
+        private async Task<Document> CleanupUsingDirectives(
+            Document document,
+            NamespaceDeclarationSyntax namespaceDeclaration)
+        {
+            var usingDirectives = UsingDirectiveHelpers.CleanupUsingDirectives(namespaceDeclaration.Usings);
+            var usings = new SyntaxList<UsingDirectiveSyntax>(usingDirectives);
+            var newNamespaceDeclaration = namespaceDeclaration.WithUsings(usings);
+            var root = await document.GetSyntaxRootAsync();
+            var newRoot = root.ReplaceNode(namespaceDeclaration, newNamespaceDeclaration);
+            return document.WithSyntaxRoot(newRoot);
         }
     }
 }
