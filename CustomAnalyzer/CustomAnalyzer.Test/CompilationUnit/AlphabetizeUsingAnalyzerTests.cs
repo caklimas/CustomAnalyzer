@@ -2,22 +2,20 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TestHelper;
-using CustomAnalyzer;
+using CustomAnalyzer.CompilationUnit;
 
 namespace CustomAnalyzer.Test
 {
     [TestClass]
-    public class ConsolidateUsingAnalyzerTests : CodeFixVerifier
+    public class AlphabetizeUsingAnalyzerTests : CodeFixVerifier
     {
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void ReturnsWarning_WhenDirectiveHasExtraTrivia()
+        public void ReturnsWarning_WhenDirectivesOutOfOrder()
         {
             var test = @"using System.Linq;
-
 using System;
 
 namespace ConsoleApplication1
@@ -28,12 +26,12 @@ namespace ConsoleApplication1
 }";
             var expected = new DiagnosticResult
             {
-                Id = ConsolidateUsingAnalyzer.DiagnosticId,
-                Message = ConsolidateUsingAnalyzer.MessageFormat.ToString(),
+                Id = AlphabetizeUsingAnalyzer.DiagnosticId,
+                Message = AlphabetizeUsingAnalyzer.MessageFormat.ToString(),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", line: 3, column: 1)
+                            new DiagnosticResultLocation("Test0.cs", line: 2, column: 1)
                         }
             };
 
@@ -41,11 +39,10 @@ namespace ConsoleApplication1
         }
 
         [TestMethod]
-        public void ShouldConsolidateUsingDirectives_WhenDirectiveHasExtraTrivia()
+        public void ShouldAlphabetizeUsingDirectives_WhenDirectivesOutOfOrder()
         {
-            var test = @"using System;
-
-using System.Linq;
+            var test = @"using System.Linq;
+using System;
 
 namespace ConsoleApplication1
 {
@@ -56,35 +53,6 @@ namespace ConsoleApplication1
 
             var fixtest = @"using System;
 using System.Linq;
-
-namespace ConsoleApplication1
-{
-    class TypeName
-    {
-    }
-}";
-            VerifyCSharpFix(test, fixtest);
-        }
-
-        [TestMethod]
-        public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
-        {
-            var test = @"using System;
-
-using System.Linq;
-
-using System.Text;
-
-namespace ConsoleApplication1
-{
-    class TypeName
-    {
-    }
-}";
-
-            var fixtest = @"using System;
-using System.Linq;
-using System.Text;
 
 namespace ConsoleApplication1
 {
@@ -97,12 +65,12 @@ namespace ConsoleApplication1
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new ConsolidateUsingAnalyzerCodeFixProvider();
+            return new AlphabetizeUsingAnalyzerCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new ConsolidateUsingAnalyzer();
+            return new AlphabetizeUsingAnalyzer();
         }
     }
 }

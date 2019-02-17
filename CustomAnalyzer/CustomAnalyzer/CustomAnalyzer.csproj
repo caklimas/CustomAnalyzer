@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
@@ -29,10 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ConsolidateUsingAnalyzer.cs">
+    <Compile Update="CompilationUnit\ConsolidateUsingAnalyzer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ConsolidateUsingAnalyzerCodeFixProvider.cs">
+    <Compile Update="CompilationUnit\ConsolidateUsingAnalyzerCodeFixProvider.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
