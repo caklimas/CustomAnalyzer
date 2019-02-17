@@ -7,8 +7,6 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
 using CustomAnalyzer.Helpers;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace CustomAnalyzer.Analyzers.UsingDirective
 {
