@@ -10,11 +10,7 @@ namespace CustomAnalyzer.Helpers
         public static async Task<Document> CleanupUsingDirectives(Document document)
         {
             var root = await document.GetSyntaxRootAsync() as CompilationUnitSyntax;
-            var usingDirectives = root.Usings
-                .Select(u => UsingDirectiveHelpers.ConsolidateUsingDirective(u))
-                .OrderBy(u => u.Name.ToString())
-                .ToList();
-
+            var usingDirectives = UsingDirectiveHelpers.CleanupUsingDirectives(root.Usings);
             var newRoot = root.WithUsings(new SyntaxList<UsingDirectiveSyntax>(usingDirectives));
             return document.WithSyntaxRoot(newRoot);
         }
