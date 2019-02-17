@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
@@ -33,6 +33,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CompilationUnit\ConsolidateUsingAnalyzerCodeFixProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="NamespaceDeclaration\AlphabetizeUsingAnalyzer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="NamespaceDeclaration\ConsolidateUsingAnalyzer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="NamespaceDeclaration\ConsolidateUsingAnalyzerCodeFixProvider.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />

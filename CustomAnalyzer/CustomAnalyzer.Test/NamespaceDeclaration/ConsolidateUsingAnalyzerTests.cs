@@ -3,9 +3,9 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
-using CustomAnalyzer.CompilationUnit;
+using CustomAnalyzer.NamespaceDeclaration;
 
-namespace CustomAnalyzer.Test.CompilationUnit
+namespace CustomAnalyzer.Test.NamespaceDeclaration
 {
     [TestClass]
     public class ConsolidateUsingAnalyzerTests : CodeFixVerifier
@@ -15,12 +15,12 @@ namespace CustomAnalyzer.Test.CompilationUnit
         [TestMethod]
         public void ReturnsWarning_WhenDirectiveHasExtraTrivia()
         {
-            var test = @"using System.Linq;
-
-using System;
-
-namespace ConsoleApplication1
+            var test = @"namespace ConsoleApplication1
 {
+    using System.Linq;
+
+    using System;
+
     class TypeName
     {
     }
@@ -32,7 +32,7 @@ namespace ConsoleApplication1
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", line: 3, column: 1)
+                            new DiagnosticResultLocation("Test0.cs", line: 5, column: 5)
                         }
             };
 
@@ -42,22 +42,22 @@ namespace ConsoleApplication1
         [TestMethod]
         public void ShouldConsolidateUsingDirectives_WhenDirectiveHasExtraTrivia()
         {
-            var test = @"using System;
-
-using System.Linq;
-
-namespace ConsoleApplication1
+            var test = @"namespace ConsoleApplication1
 {
+    using System.Linq;
+
+    using System;
+
     class TypeName
     {
     }
 }";
 
-            var fixtest = @"using System;
-using System.Linq;
-
-namespace ConsoleApplication1
+            var fixtest = @"namespace ConsoleApplication1
 {
+    using System;
+    using System.Linq;
+
     class TypeName
     {
     }
@@ -68,25 +68,25 @@ namespace ConsoleApplication1
         [TestMethod]
         public void ShouldConsolidateUsingDirectives_WhenDirectivesHaveExtraTrivia()
         {
-            var test = @"using System;
-
-using System.Linq;
-
-using System.Text;
-
-namespace ConsoleApplication1
+            var test = @"namespace ConsoleApplication1
 {
+    using System;
+
+    using System.Linq;
+
+    using System.Text;
+
     class TypeName
     {
     }
 }";
 
-            var fixtest = @"using System;
-using System.Linq;
-using System.Text;
-
-namespace ConsoleApplication1
+            var fixtest = @"namespace ConsoleApplication1
 {
+    using System;
+    using System.Linq;
+    using System.Text;
+
     class TypeName
     {
     }
